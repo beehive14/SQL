@@ -1,0 +1,31 @@
+CREATE TABLE artsupplies( 
+--Create a artsupplies database
+
+item_id INTEGER Primary KEY, 
+item_name TEXT,
+category TEXT, 
+price INTEGER,
+quantity INTEGER);
+
+INSERT INTO artsupplies VALUES 
+(1, 'Paintbrush Set','painting',20, 50),
+(2, 'Acrylic Paint Set', 'Painting',30, 30),
+(3,'Oil Paint Set','Painting',40, 20),
+(4, 'Watercolor Paint Set - 12 Tubes', 'Painting',16, 40),
+(5, 'Colored Pencils - 72 Set', 'Drawing', 13, 60),
+(6, 'Sketchbook - 100 Sheets', 'Drawing',9, 100),
+(7, 'Canvas Panel - 16x20 inches', 'Canvas',7, 75),
+(8, 'Easel - Adjustable Tripod', 'Accessories',35, 25),
+(9, 'Palette - Mixing Surface', 'Accessories',6, 80),
+(10, 'Charcoal Set - Assorted Grades', 'Drawing',10, 50),
+(11, 'Pastel Set - Soft and Hard', 'Drawing', 22, 35),
+(12, 'Ink Pen Set - Fine Liners', 'Drawing', 15, 45),
+(13, 'Clay - Sculpting Medium', 'Sculpture',17, 30),
+(14, 'Linoleum Block Set', 'Printmaking',27, 20),
+(15, 'Easel - Tabletop Mini Easel', 'Accessories',13,40);
+
+--display the database ordered by price. 
+SELECT * FROM artsupplies ORDER BY price;
+
+--what is the sum quantity of items? 
+SELECT SUM (quantity) FROM artsupplies
