@@ -1,4 +1,4 @@
-# GS14's Portfolio
+# BH14's Portfolio
 
 ### 👋 Hi, I’m Bee, an environmental scientist and aspiring data analyst with a focus on sustainability in the fashion industry. My journey combines a solid foundation in environmental science and conservation with a growing expertise in SQL and data analytics. I’m passionate about leveraging data to drive impactful change, particularly by helping brands and organizations improve their environmental sustainability, management practices, and ecological impact.
 
