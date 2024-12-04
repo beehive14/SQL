@@ -1,0 +1,82 @@
+# SQL-Mini-Project-Waste-Analysis
+
+CREATE TABLE waste_facilities (
+    facility_id INTEGER PRIMARY KEY,
+    facility_name TEXT,
+    region TEXT,
+    waste_type TEXT,
+    waste_amount REAL,
+    recycling_program BIT,
+    operational_days INTEGER
+);
+
+INSERT INTO waste_facilities (facility_name, region, waste_type, waste_amount, recycling_program, operational_days)
+VALUES
+    ('Midwest Facility A', 'Midwest', 'Textile', 1200, 1, 250),
+    ('Midwest Facility B', 'Midwest', 'Plastic', 800, 0, 200),
+    ('South Facility A', 'South', 'Textile', 400, 1, 180),
+    ('South Facility B', 'South', 'Plastic', 450, 1, 210),
+    ('West Facility A', 'West', 'Textile', 600, 0, 220),
+    ('West Facility B', 'West', 'Plastic', 1000, 1, 230),
+    ('East Facility A', 'East', 'Textile', 700, 0, 240),
+    ('East Facility B', 'East', 'Plastic', 1200, 1, 250),
+    ('Midwest Facility C', 'Midwest', 'Textile', 1300, 1, 260),
+    ('South Facility C', 'South', 'Plastic', 350, 0, 190),
+    ('West Facility C', 'West', 'Textile', 900, 1, 240),
+    ('East Facility C', 'East', 'Plastic', 1100, 1, 250),
+    ('Midwest Facility D', 'Midwest', 'Plastic', 950, 0, 220),
+    ('South Facility D', 'South', 'Textile', 300, 1, 170),
+    ('West Facility D', 'West', 'Plastic', 1200, 1, 260),
+    ('East Facility D', 'East', 'Textile', 800, 0, 200);
+
+
+#Analysis
+#Question 1: The query would classify regions into waste management performance categories based on the total waste generated.The output of this query will give you the total waste per region, along with a classification of how each region performs in terms of waste management.
+
+SELECT 
+    region, 
+    SUM(waste_amount) AS total_waste,
+    CASE
+        WHEN SUM(waste_amount) < 1000 THEN 'Low Waste'
+        WHEN SUM(waste_amount) BETWEEN 1000 AND 5000 THEN 'Moderate Waste'
+        ELSE 'High Waste'
+    END AS Waste_Performance_Category
+FROM 
+    waste_data
+GROUP BY 
+    region;
+
+#Question 2:is designed to identify regions with average waste above a certain threshold (500) by using the HAVING clause.The average amount of waste per region (calculated by AVG(waste_amount)
+
+SELECT 
+    region, 
+    AVG(waste_amount) AS average_waste
+FROM 
+    waste_data
+GROUP BY 
+    region
+HAVING 
+    AVG(waste_amount) > 500;
+
+#Question 3:Find facilities in the dataset that meet the following criteria:
+
+Are located in the Midwest region and generate more than 1,000 tons of waste, or
+Are located in the South region and generate less than 500 tons of waste.
+
+SELECT 
+    facility_name, 
+    region, 
+    waste_amount
+FROM 
+    waste_data
+WHERE 
+    (region = 'Midwest' AND waste_amount > 1000)
+    OR 
+    (region = 'South' AND waste_amount < 500);
+
+#This anaylsis can help
+#Targeting High-Waste Areas: Focus on facilities with high waste for improvement.
+#Learning from Low-Waste Facilities: Replicate best practices from efficient regions.
+#Improving Efficiency: Identify waste-related inefficiencies to reduce costs.
+#Enhancing Sustainability: Align efforts with eco-friendly goals for better consumer appeal.
+#Meeting Regulations: Ensure compliance with environmental laws in different regions.
