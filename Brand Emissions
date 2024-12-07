@@ -1,0 +1,100 @@
+-- Create the 'brands' table
+CREATE TABLE brands (
+    brand_id INTEGER,
+    brand_name TEXT
+);
+
+-- Insert data into the 'brands' table
+INSERT INTO brands (brand_id, brand_name)
+VALUES
+    (1, 'Green Threads'),
+    (2, 'Sustainable Style'),
+    (3, 'Eco Apparel'),
+    (4, 'Nature Wear'),
+    (5, 'Urban Greens');
+
+-- Create the 'production_methods' table
+CREATE TABLE production_methods (
+    method_id INTEGER,
+    method_name TEXT,
+    carbon_emission_per_unit REAL
+);
+
+-- Insert data into the 'production_methods' table
+INSERT INTO production_methods (method_id, method_name, carbon_emission_per_unit)
+VALUES
+    (1, 'Organic Cotton', 1.5),
+    (2, 'Recycled Polyester', 2.0),
+    (3, 'Conventional Cotton', 3.5),
+    (4, 'Bamboo Fiber', 1.2),
+    (5, 'Wool', 4.0);
+
+-- Create the 'brand_sales' table
+CREATE TABLE brand_sales (
+    sale_id INTEGER,
+    brand_id INTEGER,
+    method_id INTEGER,
+    garments_sold INTEGER
+);
+
+-- Insert data into the 'brand_sales' table
+INSERT INTO brand_sales (sale_id, brand_id, method_id, garments_sold)
+VALUES
+    (1, 1, 1, 500),
+    (2, 1, 2, 400),
+    (3, 2, 3, 600),
+    (4, 3, 4, 700),
+    (5, 3, 5, 300),
+    (6, 4, 1, 450),
+    (7, 5, 2, 550),
+    (8, 5, 3, 350);
+
+--Analysis
+#Emissions Analysis
+#Which brand has the highest average carbon emissions per garment sold?
+
+SELECT b.brand_name, e.average_emission_per_garment_kg
+FROM brands b
+JOIN emissions e ON b.brand_id = e.brand_id
+ORDER BY e.average_emission_per_garment_kg DESC
+LIMIT 1;
+
+#Production Method Comparison
+#Compare the average emissions per garment between sustainable and conventional production methods.
+
+
+SELECT b.production_method, AVG(e.average_emission_per_garment_kg) AS avg_emission
+FROM brands b
+JOIN emissions e ON b.brand_id = e.brand_id
+GROUP BY b.production_method;
+
+#Revenue and Emissions
+#Identify the brand with the highest revenue-to-emission ratio (revenue per kilogram of carbon emissions).
+
+
+SELECT b.brand_name, SUM(s.total_revenue) / SUM(e.total_emissions_kg) AS revenue_to_emission_ratio
+FROM brands b
+JOIN sales s ON b.brand_id = s.brand_id
+JOIN emissions e ON b.brand_id = e.brand_id
+GROUP BY b.brand_name
+ORDER BY revenue_to_emission_ratio DESC;
+
+#Regional Revenue Analysis
+#Determine which region contributes the most revenue for each brand.
+
+
+SELECT b.brand_name, s.region, SUM(s.total_revenue) AS total_revenue
+FROM brands b
+JOIN sales s ON b.brand_id = s.brand_id
+GROUP BY b.brand_name, s.region
+ORDER BY b.brand_name, total_revenue DESC;
+
+#Sustainability Insights
+
+#What is the correlation between sustainability rating and average emissions per garment?
+
+SELECT b.sustainability_rating, AVG(e.average_emission_per_garment_kg) AS avg_emission
+FROM brands b
+JOIN emissions e ON b.brand_id = e.brand_id
+GROUP BY b.sustainability_rating
+ORDER BY b.sustainability_rating DESC;
